@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply text-gray;
+}
+
+.primary-btn {
+  @apply bg-primary;
+  @apply p-2;
+  @apply text-white;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  min-width: 7rem;
+  transition: all 0.3s ease;
+}
+.primary-btn:hover {
+  background-color: #00447C;
+}
