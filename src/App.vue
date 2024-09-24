@@ -1,9 +1,9 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import Datepicker from 'vue3-datepicker';
-import CustomSelect from './components/CustomSelect.vue';
-import Rooms from './components/Rooms.vue';
-import Summary from './components/Summary.vue';
+import { defineComponent, ref } from 'vue'
+import Datepicker from 'vue3-datepicker'
+import CustomSelect from './components/CustomSelect.vue'
+import Rooms from './components/Rooms.vue'
+import Summary from './components/Summary.vue'
 
 export default defineComponent({
   components: {
@@ -13,14 +13,14 @@ export default defineComponent({
     Summary,
   },
   setup() {
-    const sd = ref();
-    const ed = ref();
-    const adults = ref('');
-    const children = ref('');
-    const summary = ref(null);
+    const sd = ref()
+    const ed = ref()
+    const adults = ref('')
+    const children = ref('')
+    const summary = ref(null)
     const selectRoom = (room: any) => {
       if (summary.value) {
-        summary.value.updateHotelData(room);
+        summary.value.updateHotelData(room)
       }
     }
     const modifyReservationHandler = () => {
@@ -28,11 +28,11 @@ export default defineComponent({
         summary.value.updateReservationData({
           startDate: new Intl.DateTimeFormat('en-US').format(sd.value),
           endDate: new Intl.DateTimeFormat('en-US').format(ed.value),
-          adults: adults.value
+          adults: adults.value,
         })
-        alert('Summary Updated');
+        alert('Summary Updated')
       }
-    };
+    }
     return {
       sd,
       ed,
@@ -42,7 +42,7 @@ export default defineComponent({
       summary,
       modifyReservationHandler,
     }
-  }
+  },
 })
 </script>
 
@@ -73,33 +73,67 @@ export default defineComponent({
         </div>
         <CustomSelect>
           <select v-model="adults">
-            <option value="">Select Adults</option>
-            <option value="1">Adults: 1</option>
-            <option value="2">Adults: 2</option>
-            <option value="3">Adults: 3</option>
-            <option value="4">Adults: 4</option>
-            <option value="5">Adults: 5</option>
+            <option value="">
+              Select Adults
+            </option>
+            <option value="1">
+              Adults: 1
+            </option>
+            <option value="2">
+              Adults: 2
+            </option>
+            <option value="3">
+              Adults: 3
+            </option>
+            <option value="4">
+              Adults: 4
+            </option>
+            <option value="5">
+              Adults: 5
+            </option>
           </select>
         </CustomSelect>
         <CustomSelect>
           <select v-model="children">
-            <option value="">Select Children</option>
-            <option value="0">Children: 0</option>
-            <option value="1">Children: 1</option>
-            <option value="2">Children: 2</option>
-            <option value="3">Children: 3</option>
-            <option value="4">Children: 4</option>
-            <option value="5">Children: 5</option>
-            <option value="6">Children: 6</option>
+            <option value="">
+              Select Children
+            </option>
+            <option value="0">
+              Children: 0
+            </option>
+            <option value="1">
+              Children: 1
+            </option>
+            <option value="2">
+              Children: 2
+            </option>
+            <option value="3">
+              Children: 3
+            </option>
+            <option value="4">
+              Children: 4
+            </option>
+            <option value="5">
+              Children: 5
+            </option>
+            <option value="6">
+              Children: 6
+            </option>
           </select>
         </CustomSelect>
-        <button @click="modifyReservationHandler" class="primary-btn">Modify</button>
+        <button class="primary-btn" @click="modifyReservationHandler">
+          Modify
+        </button>
       </div>
     </div>
   </div>
   <div class="max-w-6xl p-8 mx-auto mb-4">
-    <h1 class="mb-2 text-2xl font-display">Rooms & Rates</h1>
-    <p class="mb-4">Plan your perfect stay at your hotel</p>
+    <h1 class="mb-2 text-2xl font-display">
+      Rooms & Rates
+    </h1>
+    <p class="mb-4">
+      Plan your perfect stay at your hotel
+    </p>
     <img src="./assets/img/path.png" alt="Path" width="400">
   </div>
   <div class="inline-block px-8 mb-16">
@@ -134,6 +168,7 @@ export default defineComponent({
     div >
   </div>
 </template>
+
 <style scoped>
   .logo {
     width: 125px;
@@ -173,6 +208,7 @@ export default defineComponent({
     max-width: 80rem;
   }
 </style>
+
 <style>
   :root {
     --vdp-hover-bg-color: theme('colors.primary');

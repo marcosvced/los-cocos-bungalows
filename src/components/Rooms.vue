@@ -1,8 +1,9 @@
 <script lang="ts">
-import img1 from '../assets/img/room_1.png';
-import img3 from '../assets/img/room_3.png';
-import { defineComponent } from 'vue';
-import img2 from '../assets/img/room_2.png';
+import { defineComponent } from 'vue'
+import img1 from '../assets/img/room_1.png'
+import img2 from '../assets/img/room_2.png'
+import img3 from '../assets/img/room_3.png'
+
 export default defineComponent({
   props: {
     selectRoom: {
@@ -10,7 +11,7 @@ export default defineComponent({
       required: true,
     },
   },
-  setup () {
+  setup() {
     const my_rooms = [
       {
         name: 'Mini Dreamy Room',
@@ -38,21 +39,22 @@ export default defineComponent({
         people: '4',
         amount: '450€',
         img: img3,
-      }
+      },
     ]
 
     return {
       my_rooms,
-    };
-  }
+    }
+  },
 })
 </script>
+
 <template>
   <div class="space-y-4">
-    <div 
+    <div
       v-for="n in my_rooms"
-      class="p-4 transition-all duration-300 border cursor-pointer border-gray-light hover:bg-gray-light hover:bg-opacity-20 hover:shadow-sm"
       :key="n.name"
+      class="p-4 transition-all duration-300 border cursor-pointer border-gray-light hover:bg-gray-light hover:bg-opacity-20 hover:shadow-sm"
       @click="selectRoom(n)"
     >
       <div class="flex space-x-4">
@@ -60,22 +62,33 @@ export default defineComponent({
           <img :src="n.img" alt="Mini Dreamy Room" class="object-cover w-full h-full">
         </div>
         <div class="flex flex-col w-2/3 text-sm">
-          <p class="mb-2 text-base font-display"><strong>{{ n.name ? n.name : undefined }}</strong></p>
-          <p class="flex-1">{{ n.description }}</p>
-          <p class="mb-6">Size: {{ n.size }}</p>
+          <p class="mb-2 text-base font-display">
+            <strong>{{ n.name ? n.name : undefined }}</strong>
+          </p>
+          <p class="flex-1">
+            {{ n.description }}
+          </p>
+          <p class="mb-6">
+            Size: {{ n.size }}
+          </p>
           <div class="flex items-baseline space-x-16">
             <div>
               <img src="../assets/img/double-bed.svg" class="w-8 mb-1">
               <p>Beds: {{ n.beds }}</p>
             </div>
-              <div class="flex-1">People: {{ n.people }}</div>
-          <div class="text-xl"><strong>{{ n.amount }}</strong></div>
-        </div>
+            <div class="flex-1">
+              People: {{ n.people }}
+            </div>
+            <div class="text-xl">
+              <strong>{{ n.amount }}</strong>
+            </div>
           </div>
         </div>
-  </div>
+      </div>
+    </div>
   </div>
 </template>
+
 <style scoped>
 
 </style>

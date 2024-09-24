@@ -2,11 +2,9 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  setup () {
-    
-
+  setup() {
     return {}
-  }
+  },
 })
 </script>
 
@@ -40,6 +38,7 @@ export default defineComponent({
   clip-path: polygon(100% 0%, 0 0%, 50% 100%);
 }
 </style>
+
 <style>
 select {
   appearance: none;
