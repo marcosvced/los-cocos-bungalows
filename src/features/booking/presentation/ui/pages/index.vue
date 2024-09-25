@@ -2,16 +2,21 @@
 import type { Room } from '@/core/room/domain/entities/Room'
 import type { BookingState } from '@/features/booking/presentation/bloc/BookingState'
 import { BookingBloc } from '@/features/booking/presentation/bloc/BookingBloc'
+import { ApplyDiscountEvent } from '@/features/booking/presentation/bloc/events/ApplyDiscountEvent'
 import { GetRoomsEvent } from '@/features/booking/presentation/bloc/events/GetRoomsEvent'
 import { UpdateDatesEvent } from '@/features/booking/presentation/bloc/events/UpdateDatesEvent'
 import { UpdatePaxEvent } from '@/features/booking/presentation/bloc/events/UpdatePaxEvent'
-import { UpdateRoomEvent } from '@/features/booking/presentation/bloc/events/UpdateRoomEvent'
 
+import { UpdateRoomEvent } from '@/features/booking/presentation/bloc/events/UpdateRoomEvent'
 import RoomCard from '@/features/booking/presentation/ui/components/room-card.vue'
 import SummaryCard from '@/features/booking/presentation/ui/components/summary-card.vue'
 import { useBLoC } from '@/lib/hooks/useBLoC'
 import HeroSearchBox from '@/lib/ui/molecules/hero-search-box.vue'
 import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+const { promo_code } = route.query
 
 const bloc = new BookingBloc()
 const state = useBLoC<BookingState>(bloc)
@@ -19,6 +24,9 @@ const state = useBLoC<BookingState>(bloc)
 const defaultsSearchBox = ref()
 onMounted(async () => {
   await bloc.dispatch(new GetRoomsEvent())
+  if (Number.isInteger(Number.parseInt(promo_code))) {
+    await bloc.dispatch(new ApplyDiscountEvent(Number.parseInt(promo_code)))
+  }
   defaultsSearchBox.value = {
     arrivalDate: state.value.data?.details?.dates?.arrivalDate,
     departureDate: state.value.data?.details?.dates?.departureDate,
@@ -67,7 +75,7 @@ function onSearchBoxChange(payload: any) {
           @click="onRoomClick(room)"
         />
       </div>
-      <SummaryCard class="w-1/3 h-min" :details="state.data.details" />
+      <SummaryCard class="w-1/3 h-min" :details="{ ...state.data.details, amount: state.data?.amount }" />
     </div>
   </template>
 </template>

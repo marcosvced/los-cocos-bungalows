@@ -1,4 +1,5 @@
 import type { DTO } from '@/core/common/data/dtos/DTO'
+import type { Price } from '@/core/common/domain/entities/price'
 import { Room } from '@/core/room/domain/entities/Room'
 
 export class RoomDto implements DTO<Room> {
@@ -22,7 +23,7 @@ export class RoomDto implements DTO<Room> {
 
   toDomain() {
     return new Room({
-      amount: this.amount,
+      price: this._parseAmount(this.amount),
       beds: this.beds,
       description: this.description,
       img: this.img,
@@ -30,5 +31,12 @@ export class RoomDto implements DTO<Room> {
       people: this.people,
       size: this.size,
     })
+  }
+
+  private _parseAmount(amount: number) {
+    const numberPattern = /[\d,.]+/g
+    const total = Number.parseFloat(amount.match(numberPattern)[0].replace(',', '.'))
+    const currency = 'EUR'
+    return { amount: total, currency } as Price
   }
 }

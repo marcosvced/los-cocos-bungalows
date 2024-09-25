@@ -17,6 +17,5 @@ export function useBLoC<S>(bloc: BLoC<any, any>) {
     bloc.unsubscribe(stateSubscription)
   })
 
-  console.log(state.value)
   return readonly(state)
 }

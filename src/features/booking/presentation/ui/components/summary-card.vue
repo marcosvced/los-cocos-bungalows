@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import type { Price } from '@/core/common/domain/entities/price'
 import type { BookingDetails } from '@/features/booking/domain/entities/BookingDetails'
 import { useDateFormat } from '@/lib/hooks/useDateFormat'
+import { useMoney } from '@/lib/hooks/useMoney'
 
+interface Details extends BookingDetails {
+  amount: Price
+}
 interface Props {
-  details?: BookingDetails
+  details?: Details
 }
 defineProps<Props>()
 
@@ -14,11 +19,11 @@ function saveHandler() {
 
 <template>
   <div class="p-4 border border-gray-light">
-    <h2 class="mb-8 text-xl">
-      <strong>Reservation summary</strong>
+    <h2 class="mb-8 text-xl font-bold">
+      Reservation summary
     </h2>
-    <h3 class="mb-4">
-      <strong>{{ details?.room?.name ?? '-' }}</strong>
+    <h3 class="mb-4 font-bold">
+      {{ details?.room?.name ?? '-' }}
     </h3>
     <div class="mb-4 space-y-8 text-sm">
       <div class="flex space-x-12">
@@ -49,10 +54,14 @@ function saveHandler() {
       </div>
     </div>
     <hr class="mb-4 border-0 border-t border-gray-light">
-    <div class="flex justify-between mb-8">
-      <p>Total</p>
-      <p>{{ details?.amount ?? '-' }}</p>
-    </div>
+    <p v-if="details?.discount" class="flex justify-between mb-4">
+      <span>Discount</span>
+      <span>{{ details?.discount ?? '-' }}%</span>
+    </p>
+    <p class="flex justify-between mb-8">
+      <b>Total</b>
+      <span>{{ useMoney(details?.amount) }}</span>
+    </p>
     <button class="button" @click="saveHandler">
       Save
     </button>

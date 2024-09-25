@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Room } from '@/core/room/domain/entities/Room'
+import { useMoney } from '../../../../../lib/hooks/useMoney'
 
 interface Props {
   room: Room
@@ -33,7 +34,7 @@ defineProps<Props>()
           People: {{ room.people }}
         </p>
         <p class="font-bold text-xl">
-          {{ room.amount }}
+          {{ useMoney(room.price) }}
         </p>
       </div>
     </div>

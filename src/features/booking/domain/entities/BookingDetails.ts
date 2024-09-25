@@ -6,5 +6,5 @@ export interface BookingDetails {
   dates?: BookingDates
   pax?: BookingPax
   room?: Room
-  amount?: number
+  discount?: number
 }

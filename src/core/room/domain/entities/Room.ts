@@ -1,15 +1,17 @@
+import type { Price } from '@/core/common/domain/entities/price'
+
 export interface RoomModel {
   name?: string
   description?: string
   size?: string
   beds?: string
   people?: string
-  amount?: number
+  price?: Price
   img?: string
 }
 
 export class Room implements RoomModel {
-  amount: number
+  price: Price
   beds: string
   description: string
   img: string
@@ -17,8 +19,8 @@ export class Room implements RoomModel {
   people: string
   size: string
 
-  constructor({ amount, beds, description, img, name, people, size }: RoomModel) {
-    this.amount = amount ?? 0
+  constructor({ price, beds, description, img, name, people, size }: RoomModel) {
+    this.price = price ?? 0
     this.beds = beds ?? ''
     this.description = description ?? ''
     this.img = img ?? ''
