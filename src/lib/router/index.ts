@@ -1,4 +1,4 @@
-import Booking from '@/features/booking/presentation/ui/page/index.vue'
+import Booking from '@/features/booking/presentation/ui/pages/index.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({

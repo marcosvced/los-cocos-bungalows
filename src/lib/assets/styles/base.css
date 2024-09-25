@@ -7,6 +7,9 @@
 /* 7º Trumps */
 
 
+/* 1º Settings */
+@import 'settings/_datepicker.css';
+
 /* 2º Tools */
 @import 'tools/_utilities.css';
 
@@ -16,6 +19,7 @@
 
 /* 5º Objects */
 @import 'objects/_button.css';
+@import 'objects/_datepicker.css';
 
 /* 6º Components */
 @import 'components/_default.css';

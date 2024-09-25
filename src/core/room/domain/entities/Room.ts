@@ -18,7 +18,7 @@ export class Room implements RoomModel {
   size: string
 
   constructor({ amount, beds, description, img, name, people, size }: RoomModel) {
-    this.amount = amount ?? ''
+    this.amount = amount ?? 0
     this.beds = beds ?? ''
     this.description = description ?? ''
     this.img = img ?? ''

@@ -1,36 +1,15 @@
-<script lang="ts">
-import { defineComponent, reactive } from 'vue'
+<script setup lang="ts">
+import type { BookingDetails } from '@/features/booking/domain/entities/BookingDetails'
+import { useDateFormat } from '@/lib/hooks/useDateFormat'
 
-export default defineComponent({
-  setup() {
-    const data = reactive({
-      roomName: '-',
-      checkinDate: '-',
-      checkoutDate: '-',
-      adults: '-',
-      total: '-',
-    })
-    const updateHotelData = (hotelData: any) => {
-      data.roomName = hotelData.name
-      data.total = hotelData.amount
-    }
-    const updateReservationData = (reservationData: any) => {
-      data.checkinDate = reservationData.startDate
-      data.checkoutDate = reservationData.endDate
-      data.adults = reservationData.adults
-    }
-    const saveHandler = () => {
+interface Props {
+  details?: BookingDetails
+}
+defineProps<Props>()
 
-    }
+function saveHandler() {
 
-    return {
-      data,
-      updateHotelData,
-      updateReservationData,
-      saveHandler,
-    }
-  },
-})
+}
 </script>
 
 <template>
@@ -39,7 +18,7 @@ export default defineComponent({
       <strong>Reservation summary</strong>
     </h2>
     <h3 class="mb-4">
-      <strong>{{ data.roomName }}</strong>
+      <strong>{{ details?.room?.name ?? '-' }}</strong>
     </h3>
     <div class="mb-4 space-y-8 text-sm">
       <div class="flex space-x-12">
@@ -54,17 +33,25 @@ export default defineComponent({
       </div>
       <div>
         <p><strong>Reservation date</strong></p>
-        <p>From {{ data.checkinDate }} to {{ data.checkoutDate }}</p>
+        <p>
+          From
+          {{ details?.dates ? useDateFormat(details?.dates.arrivalDate) : '-' }}
+          to
+          {{ details?.dates ? useDateFormat(details?.dates.departureDate) : '-' }}
+        </p>
       </div>
       <div>
         <p><strong>People</strong></p>
-        <p>{{ data.adults }} Adults</p>
+        <p>{{ details?.pax?.adults ?? '-' }} Adults</p>
+        <p v-if="details?.pax?.children">
+          {{ details?.pax?.children }} Children
+        </p>
       </div>
     </div>
     <hr class="mb-4 border-0 border-t border-gray-light">
     <div class="flex justify-between mb-8">
       <p>Total</p>
-      <p>{{ data.total }}</p>
+      <p>{{ details?.amount ?? '-' }}</p>
     </div>
     <button class="button" @click="saveHandler">
       Save

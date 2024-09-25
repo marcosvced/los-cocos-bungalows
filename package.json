@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "luxon": "^3.5.0",
     "vue": "^3.2.26",
     "vue-router": "^4.4.5",
     "vue3-datepicker": "^0.3.1"
@@ -16,6 +17,7 @@
   "devDependencies": {
     "@antfu/eslint-config": "^3.7.1",
     "@rushstack/eslint-patch": "^1.1.0",
+    "@types/luxon": "^3.4.2",
     "@types/node": "^22.6.1",
     "@vitejs/plugin-vue": "^2.0.1",
     "@vue/eslint-config-typescript": "^10.0.0",

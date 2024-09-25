@@ -1,21 +1,37 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+interface Option {
+  value: string
+  label?: string
+}
 
-export default defineComponent({
-  setup() {
-    return {}
-  },
-})
+interface Props {
+  value: string | number
+  options: Option[]
+}
+defineProps<Props>()
+
+const emit = defineEmits<{ (event: 'update:value', value: string): void }>()
+
+function onChange(event: any) {
+  emit('update:value', event.target.value)
+}
 </script>
 
 <template>
-  <div class="custom-select">
-    <slot />
+  <div class="a-select">
+    <select :value="value" @change="onChange">
+      <option
+        v-for="option in options as Option[]"
+        :key="option.value" :value="option.value"
+      >
+        {{ option.label ?? option.value }}
+      </option>
+    </select>
   </div>
 </template>
 
 <style scoped>
-.custom-select {
+.a-select {
   display: grid;
   grid-template-areas: "select";
   width: 100%;
@@ -28,7 +44,7 @@ export default defineComponent({
   line-height: 24px;
   background-color: #fff;
 }
-.custom-select::after {
+.a-select::after {
   content: "";
   grid-area: select;
   justify-self: end;
@@ -37,9 +53,6 @@ export default defineComponent({
   @apply bg-gray;
   clip-path: polygon(100% 0%, 0 0%, 50% 100%);
 }
-</style>
-
-<style>
 select {
   appearance: none;
   background-color: transparent;

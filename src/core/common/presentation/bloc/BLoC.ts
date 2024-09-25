@@ -2,7 +2,7 @@ import type { State } from '@/core/common/presentation/bloc/State'
 
 export type Observer<S> = (state: S) => void
 
-export abstract class BLoC<S, E> {
+export abstract class BLoC<S> {
   private _state: S
   private _observers: Observer<S>[] = []
 
@@ -10,7 +10,7 @@ export abstract class BLoC<S, E> {
     this._state = initialState
   }
 
-  abstract dispatch(event: E): Promise<void>
+  abstract dispatch(event: any): Promise<void>
 
   get state() {
     return this._state

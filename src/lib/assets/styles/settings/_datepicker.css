@@ -1,0 +1,4 @@
+:root {
+    --vdp-hover-bg-color: theme('colors.primary');
+    --vdp-selected-bg-color: theme('colors.primary');
+}
