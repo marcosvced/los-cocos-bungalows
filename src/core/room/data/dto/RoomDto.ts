@@ -3,6 +3,7 @@ import type { Price } from '@/core/common/domain/entities/price'
 import { Room } from '@/core/room/domain/entities/Room'
 
 export class RoomDto implements DTO<Room> {
+  id: string
   amount: string
   beds: string
   description: string
@@ -12,6 +13,7 @@ export class RoomDto implements DTO<Room> {
   size: string
 
   constructor(room?: any) {
+    this.id = room?.id
     this.amount = room?.amount ?? ''
     this.beds = room?.beds ?? ''
     this.description = room?.description ?? ''
@@ -23,6 +25,7 @@ export class RoomDto implements DTO<Room> {
 
   toDomain() {
     return new Room({
+      id: this.id,
       price: this._parseAmount(this.amount),
       beds: this.beds,
       description: this.description,

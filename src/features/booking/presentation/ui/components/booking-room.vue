@@ -4,14 +4,18 @@ import { useMoney } from '@/lib/hooks/useMoney'
 
 interface Props {
   room: Room
+  isActive?: boolean
 }
 
-defineProps<Props>()
+withDefaults(defineProps<Props>(), { isActive: false })
 </script>
 
 <template>
-  <div class="flex space-x-4">
-    <img :src="room.img" alt="Mini Dreamy Room" class="object-cover w-1/3 h-full">
+  <div
+    class="booking-room"
+    :class="{ '-is-active': isActive }"
+  >
+    <img :src="room.img" alt="Mini Dreamy Room" class="booking-room__cover">
     <div class="flex flex-col w-2/3 text-sm">
       <p class="mb-2 text-base font-display font-bold">
         {{ room.name ? room.name : undefined }}
@@ -42,5 +46,28 @@ defineProps<Props>()
 </template>
 
 <style scoped>
+.booking-room {
+  @apply
+  flex
+  p-4
+  space-x-4
+  border
+  border-gray-light
+  cursor-pointer
+  hover:bg-gray-light
+  hover:bg-opacity-20
+  hover:shadow-sm
+  transition-all
+  duration-300;
+}
 
+.booking-room.-is-active {
+  @apply
+  shadow-sm
+  border-primary;
+}
+
+.booking-room__cover {
+  @apply object-cover w-1/3 h-full;
+}
 </style>

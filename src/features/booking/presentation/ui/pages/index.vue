@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { RoomState } from '@/core/room/presentation/bloc/RoomState'
+import type { BookingState } from '@/features/booking/presentation/bloc/BookingState'
 import BookingRoom from '@/features/booking/presentation/ui/components/booking-room.vue'
 import BookingSummary from '@/features/booking/presentation/ui/components/booking-summary.vue'
 import { useBookingBloc } from '@/features/booking/presentation/ui/composables/useBookingBloc'
@@ -8,6 +9,7 @@ import MHeroSearchBox from '@/lib/ui/molecules/heroSearchBox/m-hero-search-box.v
 import { computed } from 'vue'
 
 const { state: roomState } = useRoomBloc()
+
 const {
   state: bookingState,
   onRoomClickHandler,
@@ -33,7 +35,7 @@ const defaultsSearchBox = computed(() => ({
     </p>
   </template>
 
-  <template v-if="roomState.data">
+  <template v-if="roomState.data && bookingState.data">
     <MHeroSearchBox
       v-if="defaultsSearchBox"
       :defaults="defaultsSearchBox"
@@ -53,7 +55,7 @@ const defaultsSearchBox = computed(() => ({
         <BookingRoom
           v-for="room in (roomState as RoomState).data?.list ?? []"
           :key="room.name" :room="room"
-          class="p-4 transition-all duration-300 border cursor-pointer border-gray-light hover:bg-gray-light hover:bg-opacity-20 hover:shadow-sm"
+          :is-active="(bookingState as BookingState).data.room.id === room.id"
           @click="onRoomClickHandler(room)"
         />
       </div>
