@@ -3,6 +3,7 @@ import type { Price } from '@/core/common/domain/entities/price'
 import type { BookingDetails } from '@/features/booking/domain/entities/BookingDetails'
 import { useDateFormat } from '@/lib/hooks/useDateFormat'
 import { useMoney } from '@/lib/hooks/useMoney'
+import AButton from '@/lib/ui/atoms/a-button.vue'
 
 interface Details extends BookingDetails {
   amount: Price
@@ -10,11 +11,9 @@ interface Details extends BookingDetails {
 interface Props {
   details?: Details
 }
+
 defineProps<Props>()
-
-function saveHandler() {
-
-}
+const emit = defineEmits<{ (event: 'onSaveClick'): void }>()
 </script>
 
 <template>
@@ -40,9 +39,9 @@ function saveHandler() {
         <p><strong>Reservation date</strong></p>
         <p>
           From
-          {{ details?.dates ? useDateFormat(details?.dates.arrivalDate) : '-' }}
+          {{ details?.dates ? useDateFormat(details?.dates.arrivalDate.toJSDate()) : '-' }}
           to
-          {{ details?.dates ? useDateFormat(details?.dates.departureDate) : '-' }}
+          {{ details?.dates ? useDateFormat(details?.dates.departureDate.toJSDate()) : '-' }}
         </p>
       </div>
       <div>
@@ -60,11 +59,11 @@ function saveHandler() {
     </p>
     <p class="flex justify-between mb-8">
       <b>Total</b>
-      <span>{{ useMoney(details?.amount) }}</span>
+      <span>{{ details ? useMoney(details.amount) : '-' }}</span>
     </p>
-    <button class="button" @click="saveHandler">
+    <AButton class="w-full" @click="emit('onSaveClick')">
       Save
-    </button>
+    </AButton>
   </div>
 </template>
 

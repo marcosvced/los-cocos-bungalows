@@ -20,7 +20,7 @@ export class Room implements RoomModel {
   size: string
 
   constructor({ price, beds, description, img, name, people, size }: RoomModel) {
-    this.price = price ?? 0
+    this.price = price ?? { amount: 0, currency: 'EUR' }
     this.beds = beds ?? ''
     this.description = description ?? ''
     this.img = img ?? ''

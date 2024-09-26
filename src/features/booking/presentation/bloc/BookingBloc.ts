@@ -2,38 +2,42 @@ import type { Room } from '@/core/room/domain/entities/Room'
 import type { BookingDetails } from '@/features/booking/domain/entities/BookingDetails'
 import { BLoC } from '@/core/common/presentation/bloc/BLoC'
 import { Booking } from '@/features/booking/domain/entities/Booking'
+import { ApplyDiscountAction } from '@/features/booking/presentation/bloc/actions/ApplyDiscountAction'
+import { GetRoomsAction } from '@/features/booking/presentation/bloc/actions/GetRoomsAction'
+import { SaveAction } from '@/features/booking/presentation/bloc/actions/SaveAction'
+import { UpdateDatesAction } from '@/features/booking/presentation/bloc/actions/UpdateDatesAction'
+import { UpdatePaxAction } from '@/features/booking/presentation/bloc/actions/UpdatePaxAction'
+import { UpdateRoomAction } from '@/features/booking/presentation/bloc/actions/UpdateRoomAction'
 import { bookingInitialDataState, BookingState } from '@/features/booking/presentation/bloc/BookingState'
-import { ApplyDiscountEvent } from '@/features/booking/presentation/bloc/events/ApplyDiscountEvent'
-import { GetRoomsEvent } from '@/features/booking/presentation/bloc/events/GetRoomsEvent'
-import { UpdateDatesEvent } from '@/features/booking/presentation/bloc/events/UpdateDatesEvent'
-import { UpdatePaxEvent } from '@/features/booking/presentation/bloc/events/UpdatePaxEvent'
-import { UpdateRoomEvent } from '@/features/booking/presentation/bloc/events/UpdateRoomEvent'
 
-type ValidEvents = GetRoomsEvent | UpdateRoomEvent | UpdatePaxEvent | UpdateDatesEvent | ApplyDiscountEvent
+type Actions = GetRoomsAction | UpdateRoomAction | UpdatePaxAction | UpdateDatesAction | ApplyDiscountAction | SaveAction
 
 export class BookingBloc extends BLoC<BookingState> {
   constructor() {
     super(new BookingState({ data: bookingInitialDataState }))
   }
 
-  async dispatch(event: ValidEvents): Promise<void> {
+  async dispatch(action: Actions): Promise<void> {
     this.isLoading = true
+
+    const actions = new Map([])
+    actions.set(GetRoomsAction, async () => this.setRooms(await (<GetRoomsAction>action).execute() as Room[]))
+    actions.set(UpdateRoomAction, () => this.setDetails((<UpdateRoomAction>action).execute()))
+    actions.set(UpdatePaxAction, () => this.setDetails((<UpdatePaxAction>action).execute()))
+    actions.set(UpdateDatesAction, () => this.setDetails((<UpdateDatesAction>action).execute()))
+    actions.set(ApplyDiscountAction, () => this.setDetails((<ApplyDiscountAction>action).execute()))
+    actions.set(SaveAction, () => (<SaveAction>action).execute(this.state.data))
+
     try {
-      if (event instanceof GetRoomsEvent) {
-        this.setRooms(await event.execute())
-      }
-      else if (
-        event instanceof UpdateRoomEvent
-        || event instanceof UpdatePaxEvent
-        || event instanceof UpdateDatesEvent
-        || event instanceof ApplyDiscountEvent
-      ) {
-        this.setDetails(event.execute())
-      }
+      const fn: () => void = actions.get(action.constructor) as () => void
+      fn && await fn()
     }
     catch (e) {
       this.isLoading = false
       this.error = e as Error
+    }
+    finally {
+      this.isLoading = false
     }
   }
 
@@ -42,7 +46,7 @@ export class BookingBloc extends BLoC<BookingState> {
     this.state = new BookingState({ data })
   }
 
-  setDetails(payload: Pick<BookingDetails, 'room' | 'discount' | 'pax' | 'dates'>): void {
+  setDetails(payload: Partial<BookingDetails>): void {
     const details: BookingDetails = { ...this.state.data?.details, ...payload }
     const data = new Booking({ ...this.state.data, details })
     this.state = new BookingState({ data })

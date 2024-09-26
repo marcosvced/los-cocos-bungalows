@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Room } from '@/core/room/domain/entities/Room'
-import { useMoney } from '../../../../../lib/hooks/useMoney'
+import { useMoney } from '@/lib/hooks/useMoney'
 
 interface Props {
   room: Room

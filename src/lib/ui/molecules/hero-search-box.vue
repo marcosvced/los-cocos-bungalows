@@ -9,16 +9,16 @@ import { ref } from 'vue'
 
 interface Props {
   defaults?: {
-    arrivalDate?: string
-    departureDate?: string
+    arrivalDate?: DateTime
+    departureDate?: DateTime
     adults?: number
     children?: number
   }
 }
 
 interface OnChange {
-  arrivalDate: string
-  departureDate: string
+  arrivalDate: DateTime
+  departureDate: DateTime
   adults: number
   children: number
 }
@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
   defaults: undefined,
 })
 
-const emit = defineEmits<{ (event: 'onChange', payload: OnChange) }>()
+const emit = defineEmits<{ (event: 'onChange', payload: OnChange): void }>()
 
 const arrivalDate: Ref<DateTime> = ref(props.defaults?.arrivalDate ?? useDate('today'))
 const departureDate: Ref<DateTime> = ref(props.defaults?.departureDate ?? useDate('tomorrow'))

@@ -1,9 +1,13 @@
-import type { Event } from '@/core/common/presentation/bloc/Event'
+import type { Action } from '@/core/common/presentation/bloc/Action'
 import type { BookingDates } from '@/features/booking/domain/entities/BookingDates'
 import type { BookingDetails } from '@/features/booking/domain/entities/BookingDetails'
+import type { DateTime } from 'luxon'
 
-export class UpdateDatesEvent implements Event<Pick<BookingDetails, 'dates'>> {
-  constructor(private readonly arrival: string, private readonly departure: string) {
+export class UpdateDatesAction implements Action<Pick<BookingDetails, 'dates'>> {
+  constructor(
+    private readonly arrival: DateTime,
+    private readonly departure: DateTime,
+  ) {
   }
 
   execute(): Pick<BookingDetails, 'dates'> {
@@ -16,8 +20,8 @@ export class UpdateDatesEvent implements Event<Pick<BookingDetails, 'dates'>> {
     }
 
     const dates: BookingDates = {
-      arrivalDate: new Date(this.arrival),
-      departureDate: new Date(this.departure),
+      arrivalDate: this.arrival,
+      departureDate: this.departure,
     }
     return { dates }
   }

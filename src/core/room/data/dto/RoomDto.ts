@@ -33,9 +33,9 @@ export class RoomDto implements DTO<Room> {
     })
   }
 
-  private _parseAmount(amount: number) {
+  private _parseAmount(amount: string) {
     const numberPattern = /[\d,.]+/g
-    const total = Number.parseFloat(amount.match(numberPattern)[0].replace(',', '.'))
+    const total = Number.parseFloat((amount.match(numberPattern) ?? ['0'])[0]?.replace(',', '.'))
     const currency = 'EUR'
     return { amount: total, currency } as Price
   }

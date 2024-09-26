@@ -1,7 +1,7 @@
-import type { Event } from '@/core/common/presentation/bloc/Event'
+import type { Action } from '@/core/common/presentation/bloc/Action'
 import type { BookingDetails } from '@/features/booking/domain/entities/BookingDetails'
 
-export class ApplyDiscountEvent implements Event<Pick<BookingDetails, 'discount'>> {
+export class ApplyDiscountAction implements Action<Pick<BookingDetails, 'discount'>> {
   constructor(private readonly discount: number) {
   }
 

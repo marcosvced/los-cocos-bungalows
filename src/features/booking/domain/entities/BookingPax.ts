@@ -1,4 +1,4 @@
 export interface BookingPax {
   adults: number
-  children: number
+  children?: number
 }
