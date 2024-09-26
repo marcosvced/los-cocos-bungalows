@@ -1,15 +1,11 @@
 <script setup lang="ts">
-import type { Price } from '@/core/common/domain/entities/price'
-import type { BookingDetails } from '@/features/booking/domain/entities/BookingDetails'
+import type { Booking } from '@/features/booking/domain/entities/Booking'
 import { useDateFormat } from '@/lib/hooks/useDateFormat'
 import { useMoney } from '@/lib/hooks/useMoney'
 import AButton from '@/lib/ui/atoms/a-button.vue'
 
-interface Details extends BookingDetails {
-  amount: Price
-}
 interface Props {
-  details?: Details
+  details?: Booking
 }
 
 defineProps<Props>()

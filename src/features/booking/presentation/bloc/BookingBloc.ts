@@ -1,9 +1,7 @@
-import type { Room } from '@/core/room/domain/entities/Room'
-import type { BookingDetails } from '@/features/booking/domain/entities/BookingDetails'
+import type { GetRoomsAction } from '@/core/room/presentation/bloc/actions/GetRoomsAction'
 import { BLoC } from '@/core/common/presentation/bloc/BLoC'
 import { Booking } from '@/features/booking/domain/entities/Booking'
 import { ApplyDiscountAction } from '@/features/booking/presentation/bloc/actions/ApplyDiscountAction'
-import { GetRoomsAction } from '@/features/booking/presentation/bloc/actions/GetRoomsAction'
 import { SaveAction } from '@/features/booking/presentation/bloc/actions/SaveAction'
 import { UpdateDatesAction } from '@/features/booking/presentation/bloc/actions/UpdateDatesAction'
 import { UpdatePaxAction } from '@/features/booking/presentation/bloc/actions/UpdatePaxAction'
@@ -21,7 +19,6 @@ export class BookingBloc extends BLoC<BookingState> {
     this.isLoading = true
 
     const actions = new Map([])
-    actions.set(GetRoomsAction, async () => this.setRooms(await (<GetRoomsAction>action).execute() as Room[]))
     actions.set(UpdateRoomAction, () => this.setDetails((<UpdateRoomAction>action).execute()))
     actions.set(UpdatePaxAction, () => this.setDetails((<UpdatePaxAction>action).execute()))
     actions.set(UpdateDatesAction, () => this.setDetails((<UpdateDatesAction>action).execute()))
@@ -41,14 +38,8 @@ export class BookingBloc extends BLoC<BookingState> {
     }
   }
 
-  setRooms(rooms: Room[]) {
-    const data = new Booking({ ...this.state.data, rooms })
-    this.state = new BookingState({ data })
-  }
-
-  setDetails(payload: Partial<BookingDetails>): void {
-    const details: BookingDetails = { ...this.state.data?.details, ...payload }
-    const data = new Booking({ ...this.state.data, details })
+  setDetails(payload: Partial<Booking>): void {
+    const data = new Booking({ ...this.state.data, ...payload })
     this.state = new BookingState({ data })
   }
 }

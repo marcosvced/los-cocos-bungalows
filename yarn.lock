@@ -1036,13 +1036,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-vue@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "@vitejs/plugin-vue@npm:2.0.1"
+"@vitejs/plugin-vue@npm:^5.1.4":
+  version: 5.1.4
+  resolution: "@vitejs/plugin-vue@npm:5.1.4"
   peerDependencies:
-    vite: ^2.5.10
+    vite: ^5.0.0
     vue: ^3.2.25
-  checksum: 10c0/f7511ec465468902be0cbcae001bb9b7e25f792375d310f02eac9ee6549f0a39ce1a6c5c30a52bc167b96d000d084a11b47d1a93fdfee0d08d0d33230cd687c6
+  checksum: 10c0/e5294bfd6d1491bee76091807933769dc49a8e752f17ed50f6894340ffbc53c51ba436ac395df9e7a0a0e446bcde8e5e5ee77411800fb14559f48927bdb86cf3
   languageName: node
   linkType: hard
 
@@ -5508,7 +5508,7 @@ __metadata:
     "@rushstack/eslint-patch": "npm:^1.1.0"
     "@types/luxon": "npm:^3.4.2"
     "@types/node": "npm:^22.6.1"
-    "@vitejs/plugin-vue": "npm:^2.0.1"
+    "@vitejs/plugin-vue": "npm:^5.1.4"
     "@vue/eslint-config-typescript": "npm:^10.0.0"
     "@vueuse/core": "npm:^11.1.0"
     autoprefixer: "npm:^10.4.2"

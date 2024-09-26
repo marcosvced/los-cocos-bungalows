@@ -1,14 +1,14 @@
 import type { Action } from '@/core/common/presentation/bloc/Action'
-import type { BookingDetails } from '@/features/booking/domain/entities/BookingDetails'
+import type { Booking } from '@/features/booking/domain/entities/Booking'
 
-export class UpdatePaxAction implements Action<Pick<BookingDetails, 'pax'>> {
+export class UpdatePaxAction implements Action<Pick<Booking, 'pax'>> {
   constructor(
     private readonly adults: number,
     private readonly children?: number,
   ) {
   }
 
-  execute(): Pick<BookingDetails, 'pax'> {
+  execute(): Pick<Booking, 'pax'> {
     return {
       pax: {
         adults: this.adults,
