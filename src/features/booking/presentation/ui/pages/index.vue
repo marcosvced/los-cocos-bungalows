@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import RoomCard from '@/features/booking/presentation/ui/components/room-card.vue'
-import SummaryCard from '@/features/booking/presentation/ui/components/summary-card.vue'
+import type { RoomState } from '@/core/room/presentation/bloc/RoomState'
+import BookingRoom from '@/features/booking/presentation/ui/components/booking-room.vue'
+import BookingSummary from '@/features/booking/presentation/ui/components/booking-summary.vue'
 import { useBookingBloc } from '@/features/booking/presentation/ui/composables/useBookingBloc'
 import { useRoomBloc } from '@/features/booking/presentation/ui/composables/useRoomBloc'
-import HeroSearchBox from '@/lib/ui/molecules/hero-search-box.vue'
-import { onMounted, ref } from 'vue'
+import MHeroSearchBox from '@/lib/ui/molecules/heroSearchBox/m-hero-search-box.vue'
+import { computed } from 'vue'
 
 const { state: roomState } = useRoomBloc()
 const {
@@ -14,15 +15,12 @@ const {
   onSaveClickHandler,
 } = useBookingBloc()
 
-const defaultsSearchBox = ref()
-onMounted(async () => {
-  defaultsSearchBox.value = {
-    arrivalDate: bookingState.value.data?.dates?.arrivalDate,
-    departureDate: bookingState.value.data?.dates?.departureDate,
-    adults: bookingState.value.data?.pax?.adults,
-    children: bookingState.value.data?.pax?.children,
-  }
-})
+const defaultsSearchBox = computed(() => ({
+  arrivalDate: bookingState.value.data?.dates?.arrivalDate,
+  departureDate: bookingState.value.data?.dates?.departureDate,
+  adults: bookingState.value.data?.pax?.adults,
+  children: bookingState.value.data?.pax?.children,
+}))
 </script>
 
 <template>
@@ -34,8 +32,13 @@ onMounted(async () => {
       {{ error }}
     </p>
   </template>
-  <template v-else-if="roomState.data">
-    <HeroSearchBox v-if="defaultsSearchBox" :defaults="defaultsSearchBox" @on-change="onSearchBoxChangeHandler" />
+
+  <template v-if="roomState.data">
+    <MHeroSearchBox
+      v-if="defaultsSearchBox"
+      :defaults="defaultsSearchBox"
+      @on-change="onSearchBoxChangeHandler"
+    />
     <div class="max-w-6xl p-8 mx-auto mb-4">
       <h1 class="mb-2 text-2xl font-display">
         Rooms & Rates
@@ -47,14 +50,14 @@ onMounted(async () => {
     </div>
     <div class="max-w-6xl p-8 mx-auto flex mb-16 space-x-4">
       <div class="w-2/3 space-y-4">
-        <RoomCard
-          v-for="room in roomState.data.list ?? []"
+        <BookingRoom
+          v-for="room in (roomState as RoomState).data?.list ?? []"
           :key="room.name" :room="room"
           class="p-4 transition-all duration-300 border cursor-pointer border-gray-light hover:bg-gray-light hover:bg-opacity-20 hover:shadow-sm"
           @click="onRoomClickHandler(room)"
         />
       </div>
-      <SummaryCard
+      <BookingSummary
         class="w-1/3 h-min"
         :details="bookingState.data"
         @on-save-click="onSaveClickHandler"

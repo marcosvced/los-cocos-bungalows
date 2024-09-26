@@ -1,8 +1,8 @@
 import type { State } from '@/core/common/presentation/bloc/State'
 import type { Room } from '@/core/room/domain/entities/Room'
 
-export class RoomState implements State<Room[]> {
-  data: Room | { list: Room[] }
+export class RoomState implements State< { list: Room[] }> {
+  data?: { list: Room[] }
   errors: Error[]
   isLoading: boolean
 

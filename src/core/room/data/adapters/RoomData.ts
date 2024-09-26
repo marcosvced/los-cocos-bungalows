@@ -34,7 +34,7 @@ const response = [
 
 export class RoomData implements Repository<Room> {
   // TODO: add the filter params like dates
-  getAllBy() {
+  async getAllBy() {
     const rooms: RoomDto[] = response.map(room => new RoomDto(room))
     return Promise.resolve(rooms.map(roomDto => roomDto.toDomain()))
   }

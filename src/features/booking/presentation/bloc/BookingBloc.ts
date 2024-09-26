@@ -2,32 +2,41 @@ import type { GetRoomsAction } from '@/core/room/presentation/bloc/actions/GetRo
 import { BLoC } from '@/core/common/presentation/bloc/BLoC'
 import { Booking } from '@/features/booking/domain/entities/Booking'
 import { ApplyDiscountAction } from '@/features/booking/presentation/bloc/actions/ApplyDiscountAction'
+import { GetBookingAction } from '@/features/booking/presentation/bloc/actions/GetBookingAction'
 import { SaveAction } from '@/features/booking/presentation/bloc/actions/SaveAction'
 import { UpdateDatesAction } from '@/features/booking/presentation/bloc/actions/UpdateDatesAction'
 import { UpdatePaxAction } from '@/features/booking/presentation/bloc/actions/UpdatePaxAction'
 import { UpdateRoomAction } from '@/features/booking/presentation/bloc/actions/UpdateRoomAction'
 import { bookingInitialDataState, BookingState } from '@/features/booking/presentation/bloc/BookingState'
 
-type Actions = GetRoomsAction | UpdateRoomAction | UpdatePaxAction | UpdateDatesAction | ApplyDiscountAction | SaveAction
+type Actions =
+  GetRoomsAction
+  | UpdateRoomAction
+  | UpdatePaxAction
+  | UpdateDatesAction
+  | ApplyDiscountAction
+  | SaveAction
+  | GetBookingAction
 
 export class BookingBloc extends BLoC<BookingState> {
+  private actions: Map<unknown, (action: any) => void> = new Map([])
+
   constructor() {
     super(new BookingState({ data: bookingInitialDataState }))
+
+    this.actions.set(UpdateRoomAction, async (action: UpdateRoomAction) => this.setDetails(await action.execute()))
+    this.actions.set(UpdatePaxAction, async (action: UpdatePaxAction) => this.setDetails(await action.execute()))
+    this.actions.set(UpdateDatesAction, async (action: UpdateDatesAction) => this.setDetails(await action.execute()))
+    this.actions.set(ApplyDiscountAction, async (action: ApplyDiscountAction) => this.setDetails(await action.execute()))
+    this.actions.set(GetBookingAction, async (action: GetBookingAction) => this.setDetails(await action.execute()))
+    this.actions.set(SaveAction, (action: SaveAction) => action.execute(this.state.data))
   }
 
   async dispatch(action: Actions): Promise<void> {
-    this.isLoading = true
-
-    const actions = new Map([])
-    actions.set(UpdateRoomAction, () => this.setDetails((<UpdateRoomAction>action).execute()))
-    actions.set(UpdatePaxAction, () => this.setDetails((<UpdatePaxAction>action).execute()))
-    actions.set(UpdateDatesAction, () => this.setDetails((<UpdateDatesAction>action).execute()))
-    actions.set(ApplyDiscountAction, () => this.setDetails((<ApplyDiscountAction>action).execute()))
-    actions.set(SaveAction, () => (<SaveAction>action).execute(this.state.data))
-
     try {
-      const fn: () => void = actions.get(action.constructor) as () => void
-      fn && await fn()
+      this.isLoading = true
+      const fn: undefined | ((action: any) => void) = this.actions.get(action.constructor)
+      fn && await fn(action)
     }
     catch (e) {
       this.isLoading = false

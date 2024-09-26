@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { DateTime } from 'luxon'
-import type { Ref } from 'vue'
 import { useDate } from '@/lib/hooks/useDate'
 import AButton from '@/lib/ui/atoms/a-button.vue'
 import ADatepicker from '@/lib/ui/atoms/a-datepicker.vue'
 import ASelect from '@/lib/ui/atoms/a-select.vue'
-import { ref } from 'vue'
+import { useSearchBoxDates } from '@/lib/ui/molecules/heroSearchBox/composables/useSearchBoxDates'
+import { useSearchBoxPax } from '@/lib/ui/molecules/heroSearchBox/composables/useSearchBoxPax'
 
 interface Props {
   defaults?: {
@@ -23,34 +23,19 @@ interface OnChange {
   children: number
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  defaults: undefined,
-})
+const props = defineProps<Props>()
 
 const emit = defineEmits<{ (event: 'onChange', payload: OnChange): void }>()
 
-const arrivalDate: Ref<DateTime> = ref(props.defaults?.arrivalDate ?? useDate('today'))
-const departureDate: Ref<DateTime> = ref(props.defaults?.departureDate ?? useDate('tomorrow'))
+const { departureDate, arrivalDate } = useSearchBoxDates({
+  arrivalDate: props.defaults.arrivalDate,
+  departureDate: props.defaults.departureDate,
+})
 
-const adults = ref(props.defaults?.adults ?? 1)
-const children = ref(props.defaults?.children ?? 0)
-
-const adultsOptions = [
-  { value: 1, label: 'Adults: 1' },
-  { value: 2, label: 'Adults: 2' },
-  { value: 3, label: 'Adults: 3' },
-  { value: 4, label: 'Adults: 4' },
-  { value: 5, label: 'Adults: 5' },
-]
-const childrenOptions = [
-  { value: 0, label: 'Children: 0' },
-  { value: 1, label: 'Children: 1' },
-  { value: 2, label: 'Children: 2' },
-  { value: 3, label: 'Children: 3' },
-  { value: 4, label: 'Children: 4' },
-  { value: 5, label: 'Children: 5' },
-  { value: 6, label: 'Children: 6' },
-]
+const { adults, adultsOptions, children, childrenOptions } = useSearchBoxPax({
+  adults: props.defaults.adults,
+  children: props.defaults.children,
+})
 
 function onModifyClick() {
   emit('onChange', {

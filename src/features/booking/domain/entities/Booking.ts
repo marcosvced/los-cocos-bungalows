@@ -10,10 +10,10 @@ export interface BookingModel {
   discount?: number
 }
 export class Booking implements BookingModel {
-  dates: BookingDates
-  discount: number
-  pax: BookingPax
-  room: Room
+  dates?: BookingDates
+  discount?: number
+  pax?: BookingPax
+  room?: Room
 
   constructor({ pax, dates, room, discount }: BookingModel) {
     this.pax = pax

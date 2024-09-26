@@ -5,7 +5,6 @@ import { GetRoomsQuery } from '@/core/room/domain/queries/GetRoomsQuery'
 
 export class GetRoomsAction implements Action<Room[]> {
   async execute(): Promise<Room[]> {
-    console.log('aka')
     const action = new GetRoomsQuery(new RoomData())
     return await action.execute()
   }

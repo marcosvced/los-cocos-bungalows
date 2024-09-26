@@ -1,16 +1,31 @@
 import type { Repository } from '@/core/common/domain/ports/Repository'
+import type { RoomDto } from '@/core/room/data/dto/RoomDto'
 import type { Booking } from '@/features/booking/domain/entities/Booking'
-import { useStorage } from '@vueuse/core'
+import { BookingDto } from '@/features/booking/data/dto/BookingDto'
+import { useMoney } from '@/lib/hooks/useMoney'
 
 export class BookingData implements Repository<Booking> {
   private storageKey = 'BOOKING_DATA'
-  save(booking: Booking): Promise<void> {
-    useStorage(this.storageKey, booking)
+  async save(booking: Booking): Promise<void> {
+    const dto = {
+      discount: booking.discount,
+      pax: booking.pax,
+      dates: {
+        arrivalDate: booking.dates?.arrivalDate.toJSDate(),
+        departureDate: booking.dates?.departureDate.toJSDate(),
+      },
+      room: {
+        ...booking.room,
+        amount: booking.room ? useMoney(booking.room.price) : '0',
+      } as RoomDto,
+    }
+    localStorage.setItem(this.storageKey, JSON.stringify(dto))
   }
 
   get(): Promise<Booking> {
     // Perhaps in the future it will be necessary to check if there
     // is data in local storage and if not, make a request rest
-    return useStorage(this.storageKey)
+    const data: BookingDto = new BookingDto(JSON.parse(localStorage.getItem(this.storageKey) ?? '{}'))
+    return Promise.resolve(data.toDomain())
   }
 }

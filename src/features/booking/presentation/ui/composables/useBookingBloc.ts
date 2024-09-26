@@ -1,6 +1,7 @@
 import type { Room } from '@/core/room/domain/entities/Room'
 import type { BookingState } from '@/features/booking/presentation/bloc/BookingState'
 import { ApplyDiscountAction } from '@/features/booking/presentation/bloc/actions/ApplyDiscountAction'
+import { GetBookingAction } from '@/features/booking/presentation/bloc/actions/GetBookingAction'
 import { SaveAction } from '@/features/booking/presentation/bloc/actions/SaveAction'
 import { UpdateDatesAction } from '@/features/booking/presentation/bloc/actions/UpdateDatesAction'
 import { UpdatePaxAction } from '@/features/booking/presentation/bloc/actions/UpdatePaxAction'
@@ -18,6 +19,7 @@ export function useBookingBloc() {
   const state = useBLoC<BookingState>(bloc)
 
   onMounted(async () => {
+    await bloc.dispatch(new GetBookingAction())
     if (Number.isInteger(Number.parseInt(promo_code as string))) {
       await bloc.dispatch(new ApplyDiscountAction(Number.parseInt(promo_code as string)))
     }
