@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 
 interface Defaults {
-  adults: number
+  adults?: number
   children?: number
 }
 

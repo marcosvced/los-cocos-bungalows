@@ -4,8 +4,8 @@ import { useDate } from '@/lib/hooks/useDate'
 import { ref } from 'vue'
 
 interface Defaults {
-  arrivalDate: DateTime
-  departureDate: DateTime
+  arrivalDate?: DateTime
+  departureDate?: DateTime
 }
 
 export function useSearchBoxDates(defaults: Defaults) {

@@ -28,13 +28,13 @@ const props = defineProps<Props>()
 const emit = defineEmits<{ (event: 'onChange', payload: OnChange): void }>()
 
 const { departureDate, arrivalDate } = useSearchBoxDates({
-  arrivalDate: props.defaults.arrivalDate,
-  departureDate: props.defaults.departureDate,
+  arrivalDate: props.defaults?.arrivalDate,
+  departureDate: props.defaults?.departureDate,
 })
 
 const { adults, adultsOptions, children, childrenOptions } = useSearchBoxPax({
-  adults: props.defaults.adults,
-  children: props.defaults.children,
+  adults: props.defaults?.adults,
+  children: props.defaults?.children,
 })
 
 function onModifyClick() {
