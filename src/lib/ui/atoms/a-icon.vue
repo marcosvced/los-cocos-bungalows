@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, watch } from 'vue'
+import { defineProps, ref, watchEffect } from 'vue'
 
 interface Props {
   icon: string
@@ -10,22 +10,16 @@ const icons = import.meta.glob('../../assets/icons/*.svg')
 
 const internalIcon = ref(null)
 
-async function loadIcon(iconName) {
-  const iconPath = `../../assets/icons/${iconName}.svg`
+watchEffect(async () => {
+  const iconPath = `../../assets/icons/${props.icon}.svg`
 
   if (icons[iconPath]) {
     internalIcon.value = (await icons[iconPath]()).default
   }
   else {
-    console.error(`Icon not found: ${iconName}`)
+    console.error(`Icon not found: ${props.icon}`)
     internalIcon.value = null
   }
-}
-
-loadIcon(props.icon)
-
-watch(() => props.icon, (newIcon) => {
-  loadIcon(newIcon)
 })
 </script>
 
