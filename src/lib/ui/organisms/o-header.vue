@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import AIcon from '@/lib/ui/atoms/a-icon.vue'
 import ALogo from '@/lib/ui/atoms/a-logo.vue'
 import { ref } from 'vue'
 
@@ -42,9 +43,7 @@ function onToggleClickHandler() {
         </li>
       </ul>
     </menu>
-    <span class="header__toggle-btn" @click="onToggleClickHandler">
-      menu
-    </span>
+    <AIcon class="header__toggle-btn" :icon="isMenuOpen ? 'x' : 'menu'" @click="onToggleClickHandler" />
   </header>
 </template>
 
@@ -66,6 +65,10 @@ header {
 .header__logo,
 .header__toggle-btn {
   @apply p-4 lg:hidden relative z-10;
+}
+
+.header__toggle-btn{
+  @apply text-2xl leading-none;
 }
 
 menu {

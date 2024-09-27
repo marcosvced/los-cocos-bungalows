@@ -4,6 +4,8 @@ import { useDate } from '@/lib/hooks/useDate'
 import AIcon from '@/lib/ui/atoms/a-icon.vue'
 import { computed } from 'vue'
 import Datepicker from 'vue3-datepicker'
+
+// FIXME: find out why it is necessary to import the vue3-datepicker styles so that it does not crash in production.
 import 'vue3-datepicker/dist/vue3-datepicker.css'
 
 interface Props {
