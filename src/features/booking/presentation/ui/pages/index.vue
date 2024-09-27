@@ -56,7 +56,7 @@ const defaultsSearchBox = computed(() => ({
           <li v-for="room in (roomState as RoomState).data?.list ?? []" :key="room.name">
             <BookingRoom
               :room="room"
-              :is-active="(bookingState as BookingState).data.room.id === room.id"
+              :is-active="(bookingState as BookingState).data?.room?.id === room.id"
               @click="onRoomClickHandler(room)"
             />
           </li>

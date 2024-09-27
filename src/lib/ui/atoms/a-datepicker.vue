@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { DateTime } from 'luxon'
 import { useDate } from '@/lib/hooks/useDate'
+import AIcon from '@/lib/ui/atoms/a-icon.vue'
 import { computed } from 'vue'
 import Datepicker from 'vue3-datepicker'
 
@@ -21,12 +22,24 @@ const internalDate = computed({
 </script>
 
 <template>
-  <Datepicker
-    v-model="internalDate"
-    :lower-limit="parsedLimit"
-  />
+  <div class="a-datepicker">
+    <Datepicker
+      v-model="internalDate"
+      :lower-limit="parsedLimit"
+      input-format="dd/MM/yyyy"
+    />
+    <AIcon icon="calendar" class="icon" />
+  </div>
 </template>
 
 <style scoped>
-
+.a-datepicker {
+  position: relative;
+}
+.icon {
+  position: absolute;
+  top: 50%;
+  right: 1em;
+  transform: translateY(-50%);
+}
 </style>

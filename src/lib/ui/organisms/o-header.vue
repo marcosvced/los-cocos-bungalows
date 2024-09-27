@@ -7,7 +7,7 @@ interface Nav {
   label: string
 }
 
-const menu: [Nav[]] = [
+const menu: Nav[][] = [
   [
     { href: '#', label: 'Home' },
     { href: '#', label: 'Rooms' },

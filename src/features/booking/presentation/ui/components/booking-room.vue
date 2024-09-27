@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Room } from '@/core/room/domain/entities/Room'
 import { useMoney } from '@/lib/hooks/useMoney'
+import AIcon from '@/lib/ui/atoms/a-icon.vue'
 
 interface Props {
   room: Room
@@ -30,7 +31,7 @@ withDefaults(defineProps<Props>(), { isActive: false })
 
       <div class="flex items-baseline space-x-4 md:space-x-16">
         <p>
-          <img src="@/lib/assets/img/double-bed.svg" class="w-8 mb-1">
+          <AIcon class="text-2xl leading-none" icon="double-bed" />
           <span>Beds: {{ room.beds }}</span>
         </p>
 
