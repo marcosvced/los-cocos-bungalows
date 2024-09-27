@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { Ref } from 'vue'
 import { defineProps, ref, watchEffect } from 'vue'
 
 interface Props {
@@ -8,14 +9,15 @@ const props = defineProps<Props>()
 
 const icons = import.meta.glob('../../assets/icons/*.svg')
 
-const internalIcon = ref(null)
+const internalIcon: Ref<unknown> = ref(null)
 
 watchEffect(async () => {
   const iconPath = `../../assets/icons/${props.icon}.svg`
 
   if (icons[iconPath]) {
-    internalIcon.value = (await icons[iconPath]()).default
+    internalIcon.value = (<any>await icons[iconPath]()).default
   }
+
   else {
     console.error(`Icon not found: ${props.icon}`)
     internalIcon.value = null
