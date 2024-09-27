@@ -4,6 +4,7 @@ import { useDate } from '@/lib/hooks/useDate'
 import AIcon from '@/lib/ui/atoms/a-icon.vue'
 import { computed } from 'vue'
 import Datepicker from 'vue3-datepicker'
+import 'vue3-datepicker/dist/vue3-datepicker.css'
 
 interface Props {
   date: DateTime
