@@ -12,7 +12,7 @@ The project must meet the following objectives:
 
 Nice to have:
 
-- [ ] The web application should be optimized for mobile devices and maintain the current development framework (Vue)
+- [x] The web application should be optimized for mobile devices and maintain the current development framework (Vue)
 
 ## Reminder:
 
