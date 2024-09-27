@@ -48,12 +48,12 @@ function onModifyClick() {
 </script>
 
 <template>
-  <div class="hero mb-4">
-    <div class="flex justify-center px-8 py-4 bg-primary bg-opacity-40 space-x-4">
-      <ADatepicker v-model:date="arrivalDate" :limit-date="useDate('today')" />
-      <ADatepicker v-model:date="departureDate" :limit-date="useDate(arrivalDate.toJSDate(), { plus: 1 })" />
-      <ASelect v-model:value="adults" :options="adultsOptions" />
-      <ASelect v-model:value="children" :options="childrenOptions" />
+  <div class="hero">
+    <div class="hero__wrapper">
+      <ADatepicker v-model:date="arrivalDate" class="flex-1" :limit-date="useDate('today')" />
+      <ADatepicker v-model:date="departureDate" class="flex-1" :limit-date="useDate(arrivalDate.toJSDate(), { plus: 1 })" />
+      <ASelect v-model:value="adults" class="flex-1" :options="adultsOptions" />
+      <ASelect v-model:value="children" class="flex-1" :options="childrenOptions" />
       <AButton @click="onModifyClick">
         Modify
       </AButton>
@@ -63,9 +63,25 @@ function onModifyClick() {
 
 <style scoped>
 .hero {
-  @apply bg-cover;
-  @apply bg-center;
-  @apply bg-no-repeat;
+  @apply bg-cover bg-center bg-no-repeat mb-4 relative;
   background-image: url(@/lib/assets/img/los-cocos-room-header-2-x.png);
+}
+.hero:before {
+  content: '';
+  @apply block w-full h-full absolute bg-primary bg-opacity-40 z-0;
+}
+.hero__wrapper {
+  @apply
+  max-w-6xl
+  mx-auto
+  flex
+  flex-col lg:flex-row
+  justify-center
+  px-4 md:px-8
+  py-4
+  space-y-2 lg:space-y-0 lg:space-x-4
+  relative
+  z-10;
+
 }
 </style>

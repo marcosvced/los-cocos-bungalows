@@ -41,33 +41,61 @@ const defaultsSearchBox = computed(() => ({
       :defaults="defaultsSearchBox"
       @on-change="onSearchBoxChangeHandler"
     />
-    <div class="max-w-6xl p-8 mx-auto mb-4">
-      <h1 class="mb-2 text-2xl font-display">
-        Rooms & Rates
-      </h1>
-      <p class="mb-4">
-        Plan your perfect stay at your hotel
-      </p>
-      <img src="@/lib/assets/img/path.png" alt="Path" width="400">
-    </div>
-    <div class="max-w-6xl p-8 mx-auto flex mb-16 space-x-4">
-      <div class="w-2/3 space-y-4">
-        <BookingRoom
-          v-for="room in (roomState as RoomState).data?.list ?? []"
-          :key="room.name" :room="room"
-          :is-active="(bookingState as BookingState).data.room.id === room.id"
-          @click="onRoomClickHandler(room)"
+    <main>
+      <div class="booking__stepper ">
+        <h1>
+          Rooms & Rates
+        </h1>
+        <p class="mb-4">
+          Plan your perfect stay at your hotel
+        </p>
+        <img src="@/lib/assets/img/path.png" alt="Path" width="400">
+      </div>
+      <div class="booking__details">
+        <ul class="details__rooms">
+          <li v-for="room in (roomState as RoomState).data?.list ?? []" :key="room.name">
+            <BookingRoom
+              :room="room"
+              :is-active="(bookingState as BookingState).data.room.id === room.id"
+              @click="onRoomClickHandler(room)"
+            />
+          </li>
+        </ul>
+        <BookingSummary
+          class="details__summary"
+          :details="bookingState.data"
+          @on-save-click="onSaveClickHandler"
         />
       </div>
-      <BookingSummary
-        class="w-1/3 h-min"
-        :details="bookingState.data"
-        @on-save-click="onSaveClickHandler"
-      />
-    </div>
+    </main>
   </template>
 </template>
 
 <style scoped>
+main {
+  @apply max-w-6xl mx-auto;
+}
 
+.booking__stepper {
+  @apply p-8 mb-4;
+
+  h1 {
+    @apply mb-2 text-2xl font-display;
+  }
+}
+
+.booking__details {
+  @apply
+  p-4 md:p-8
+  flex
+  flex-col-reverse lg:flex-row
+  mb-8 lg:mb-16;
+}
+
+.details__rooms {
+  @apply space-y-4 lg:w-2/3;
+}
+.details__summary {
+  @apply mb-4 lg:ml-4 lg:mb-0 lg:w-1/3 h-min;
+}
 </style>

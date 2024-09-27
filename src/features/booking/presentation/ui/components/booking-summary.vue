@@ -64,15 +64,4 @@ const emit = defineEmits<{ (event: 'onSaveClick'): void }>()
 </template>
 
 <style scoped>
-.button {
-  display: block;
-  width: 100%;
-  background-color: #0162B3;
-  color: white;
-  padding: 10px;
-  font-size: 1rem;
-  line-height: 1.5rem;
-  min-width: 7rem;
-  transition: all 0.3s ease;
-}
 </style>

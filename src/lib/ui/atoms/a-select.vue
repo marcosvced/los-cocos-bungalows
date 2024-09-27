@@ -36,7 +36,6 @@ function onChange(event: any) {
   grid-template-areas: "select";
   width: 100%;
   min-width: 15ch;
-  max-width: 30ch;
   align-items: center;
   @apply p-2;
   font-size: 1rem;

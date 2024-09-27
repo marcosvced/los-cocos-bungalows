@@ -7,8 +7,8 @@ The project must meet the following objectives:
 - [x] Check-in and check-out dates must be today and tomorrow.
 - [x] When clicking on the "Modify" button, the "Summary" section information must be updated.
 - [x] When selecting one of the 3 hotel options, the "Summary" section information must be updated.
-- [ ] When clicking on the "Save" button, the information must be saved locally. This means that when refreshing the browser, the data must be kept.
-- [ ] When `promo_code` parameter is within the URL, a discount must be applied on the final price. E.g: `dummyurl.com?promo_code=10` applies a 10% discount on the Summary section
+- [x] When clicking on the "Save" button, the information must be saved locally. This means that when refreshing the browser, the data must be kept.
+- [x] When `promo_code` parameter is within the URL, a discount must be applied on the final price. E.g: `dummyurl.com?promo_code=10` applies a 10% discount on the Summary section
 
 Nice to have:
 

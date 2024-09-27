@@ -16,7 +16,7 @@ withDefaults(defineProps<Props>(), { isActive: false })
     :class="{ '-is-active': isActive }"
   >
     <img :src="room.img" alt="Mini Dreamy Room" class="booking-room__cover">
-    <div class="flex flex-col w-2/3 text-sm">
+    <div class="booking-room__details">
       <p class="mb-2 text-base font-display font-bold">
         {{ room.name ? room.name : undefined }}
       </p>
@@ -28,7 +28,7 @@ withDefaults(defineProps<Props>(), { isActive: false })
         Size: {{ room.size }}
       </p>
 
-      <div class="flex items-baseline space-x-16">
+      <div class="flex items-baseline space-x-4 md:space-x-16">
         <p>
           <img src="@/lib/assets/img/double-bed.svg" class="w-8 mb-1">
           <span>Beds: {{ room.beds }}</span>
@@ -49,8 +49,10 @@ withDefaults(defineProps<Props>(), { isActive: false })
 .booking-room {
   @apply
   flex
+  flex-col
+  md:flex-row
   p-4
-  space-x-4
+  md:space-x-4
   border
   border-gray-light
   cursor-pointer
@@ -68,6 +70,14 @@ withDefaults(defineProps<Props>(), { isActive: false })
 }
 
 .booking-room__cover {
-  @apply object-cover w-1/3 h-full;
+  @apply object-cover mb-2 lg:mb-0 md:w-1/3 h-full;
+}
+
+.booking-room__details {
+  @apply
+  flex
+  flex-col
+  md:w-2/3
+  text-sm;
 }
 </style>
