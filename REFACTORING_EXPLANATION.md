@@ -54,9 +54,9 @@ get(): Promise<Booking> {
 
 
 4. **Descuento con `promo_code`**: Se implementó el descuento aplicable cuando el parámetro promo_code está presente en la URL. Por ejemplo, si ?promo_code=10 se aplica un 10% de descuento al precio total del resumen.
-   Al aplicarlo junto el patron BLoC permite de forma simple que en un funturo se añada un input (u otra forma) para añadir el código de descuento
+Al aplicarlo junto el patron BLoC permite de forma simple que en un funturo se añada un input (u otra forma) para añadir el código de descuento
    
-   ```ts
+ ```ts
    const route = useRoute()
    const { promo_code } = route.query
    
@@ -67,7 +67,7 @@ get(): Promise<Booking> {
          await bloc.dispatch(new ApplyDiscountAction(Number.parseInt(promo_code as string)))
        }
    })
-   ```
+```
    
    
 
