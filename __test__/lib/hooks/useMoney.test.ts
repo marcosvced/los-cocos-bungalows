@@ -6,7 +6,7 @@ const originalNavigator = { ...navigator }
 
 describe('useMoney', () => {
   afterEach(() => {
-    global.navigator = originalNavigator
+    globalThis.navigator = originalNavigator
   })
 
   it('should format money correctly with default locale', () => {
@@ -24,7 +24,7 @@ describe('useMoney', () => {
   it('should fallback to navigator language when locale is not provided', () => {
     const price: Price = { amount: 1000, currency: 'GBP' }
 
-    Object.defineProperty(global.navigator, 'language', { value: 'fr-FR' })
+    Object.defineProperty(globalThis.navigator, 'language', { value: 'fr-FR' })
 
     const formatted = useMoney(price)
     expect(formatted).toBe('1 000,00 £GB')

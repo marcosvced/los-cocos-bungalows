@@ -182,4 +182,27 @@ Aunque he aplicado diversas mejoras en la refactorización, hay ciertos aspectos
 5. **Otras mejoras potenciales**
 
 * **Accesibilidad y optimización:** Se podría mejorar la accesibilidad de algunos elementos clave como formularios o botones, asegurándose de que sean completamente navegables y usables con teclados y lectores de pantalla, así como la utilización de formatos más adecuados para las imágenes como webp.
-* **Pruebas unitarias y de integración:** Implementar un conjunto de pruebas unitarias e integración para asegurar la calidad y evitar futuras regresiones en el sistema.
+* **Pruebas unitarias y de integración:** Implementar máx pruebas unitarias e integración para asegurar la calidad y evitar futuras regresiones en el sistema.
+* **Injección de dependencias decoradores:** Implementar un sistema de injección de dependencias mediante decoradores con los que poder indicar que implementación es la que se necesita injectar en cada caso para no tener que anidar la instaciación de multiples dependencias.   
+  En lugar de:
+    ```ts
+        const example = new Example(new DependencyImpl(new AnotherDependencyImpl()))
+    ```
+  Hacer esto:
+    ```ts
+    import {PackageJson} from "type-fest";
+    import Dependency = PackageJson.Dependency;
+    import Dependency = PackageJson.Dependency;
+    
+    export class Example {
+        constructor(@inject private readonly dependency: Dependency) {
+        }
+        // ...
+    }
+    
+    export class AnotherDependencyImpl implements AnotherDependency {
+        constructor(@inject private readonly anotherDependency: AnotherDependency) {
+        }
+        // ...
+    }
+    ```

@@ -31,7 +31,7 @@ const defaultsSearchBox = computed(() => ({
   </template>
   <template v-else-if="0 < bookingState.errors.length || 0 < roomState.errors.length">
     <p v-for="(error, index) in bookingState.errors" :key="index">
-      {{ error }}
+      {{ error.message() }}
     </p>
   </template>
 

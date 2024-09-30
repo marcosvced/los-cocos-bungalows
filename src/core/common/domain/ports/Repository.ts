@@ -1,5 +1,5 @@
 export interface Repository<T = any> {
-  // TODO: add other common methods like add, delete, etc
+  // TODO: add other common methods like delete, etc
   // getBy: (...args: any[]) => Promise<T>
   // getAll: () => Promise<T[]>
   get?: () => Promise<T>

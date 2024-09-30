@@ -1,3 +1,4 @@
+import type { Exception } from '@/core/common/domain/exceptions/Exception'
 import type { GetRoomsAction } from '@/core/room/presentation/bloc/actions/GetRoomsAction'
 import { BLoC } from '@/core/common/presentation/bloc/BLoC'
 import { Booking } from '@/features/booking/domain/entities/Booking'
@@ -9,7 +10,7 @@ import { UpdatePaxAction } from '@/features/booking/presentation/bloc/actions/Up
 import { UpdateRoomAction } from '@/features/booking/presentation/bloc/actions/UpdateRoomAction'
 import { bookingInitialDataState, BookingState } from '@/features/booking/presentation/bloc/BookingState'
 
-type Actions =
+type BookingAction =
   GetRoomsAction
   | UpdateRoomAction
   | UpdatePaxAction
@@ -29,22 +30,27 @@ export class BookingBloc extends BLoC<BookingState> {
     this.actions.set(UpdateDatesAction, async (action: UpdateDatesAction) => this.setDetails(await action.execute()))
     this.actions.set(ApplyDiscountAction, async (action: ApplyDiscountAction) => this.setDetails(await action.execute()))
     this.actions.set(GetBookingAction, async (action: GetBookingAction) => this.setDetails(await action.execute()))
-    this.actions.set(SaveAction, (action: SaveAction) => action.execute(this.state.data))
+    this.actions.set(SaveAction, (action: SaveAction) => action.execute())
   }
 
-  async dispatch(action: Actions): Promise<void> {
+  async dispatch(action: BookingAction): Promise<void> {
     try {
       this.isLoading = true
       const fn: undefined | ((action: any) => void) = this.actions.get(action.constructor)
       fn && await fn(action)
     }
-    catch (e) {
-      this.isLoading = false
-      this.error = e as Error
+    catch (e: Exception | any) {
+      this.handelException(e)
     }
     finally {
       this.isLoading = false
     }
+  }
+
+  handelException(exception: Exception) {
+    // TODO: handle errors accordingly, displaying messages to users if necessary.
+    this.error = exception
+    console.error(exception)
   }
 
   setDetails(payload: Partial<Booking>): void {

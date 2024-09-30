@@ -1,3 +1,4 @@
+import type { Exception } from '@/core/common/domain/exceptions/Exception'
 import type { Room } from '@/core/room/domain/entities/Room'
 import { BLoC } from '@/core/common/presentation/bloc/BLoC'
 import { GetRoomsAction } from '@/core/room/presentation/bloc/actions/GetRoomsAction'
@@ -18,11 +19,15 @@ export class RoomBloc extends BLoC<RoomState> {
     }
     catch (e) {
       this.isLoading = false
-      this.error = e as Error
+      this.error = e as Exception
     }
     finally {
       this.isLoading = false
     }
+  }
+
+  handelException(exception: Exception) {
+    console.error(exception)
   }
 
   setRooms(rooms: Room[]) {

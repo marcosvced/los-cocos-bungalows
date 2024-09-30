@@ -5,7 +5,7 @@ import { BookingDto } from '@/features/booking/data/dto/BookingDto'
 import { useMoney } from '@/lib/hooks/useMoney'
 
 export class BookingData implements Repository<Booking> {
-  private storageKey = 'BOOKING_DATA'
+  static readonly storageKey = 'BOOKING_DATA'
   async save(booking: Booking): Promise<void> {
     const dto = {
       discount: booking.discount,
@@ -19,13 +19,13 @@ export class BookingData implements Repository<Booking> {
         amount: booking.room ? useMoney(booking.room.price) : '0',
       } as RoomDto,
     }
-    localStorage.setItem(this.storageKey, JSON.stringify(dto))
+    localStorage.setItem(BookingData.storageKey, JSON.stringify(dto))
   }
 
   get(): Promise<Booking> {
     // Perhaps in the future it will be necessary to check if there
     // is data in local storage and if not, make a request rest
-    const data: BookingDto = new BookingDto(JSON.parse(localStorage.getItem(this.storageKey) ?? '{}'))
+    const data: BookingDto = new BookingDto(JSON.parse(localStorage.getItem(BookingData.storageKey) ?? '{}'))
     return Promise.resolve(data.toDomain())
   }
 }

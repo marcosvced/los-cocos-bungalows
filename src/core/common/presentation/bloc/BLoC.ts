@@ -1,3 +1,4 @@
+import type { Exception } from '@/core/common/domain/exceptions/Exception'
 import type { State } from '@/core/common/presentation/bloc/State'
 
 export type Observer<S> = (state: S) => void
@@ -11,6 +12,7 @@ export abstract class BLoC<S> {
   }
 
   abstract dispatch(event: any): Promise<void>
+  abstract handelException(exception: Exception): void
 
   get state() {
     return this._state
@@ -30,7 +32,7 @@ export abstract class BLoC<S> {
   }
 
   // eslint-disable-next-line accessor-pairs
-  set error(error: Error) {
+  set error(error: Exception) {
     const { errors } = this.state as State<S>
     errors.push(error)
     this.state = { ...this.state, errors }
