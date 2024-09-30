@@ -30,7 +30,7 @@ export class BookingBloc extends BLoC<BookingState> {
     this.actions.set(UpdateDatesAction, async (action: UpdateDatesAction) => this.setDetails(await action.execute()))
     this.actions.set(ApplyDiscountAction, async (action: ApplyDiscountAction) => this.setDetails(await action.execute()))
     this.actions.set(GetBookingAction, async (action: GetBookingAction) => this.setDetails(await action.execute()))
-    this.actions.set(SaveAction, (action: SaveAction) => action.execute())
+    this.actions.set(SaveAction, (action: SaveAction) => action.execute(this.state.data))
   }
 
   async dispatch(action: BookingAction): Promise<void> {
