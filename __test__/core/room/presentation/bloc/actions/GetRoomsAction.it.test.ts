@@ -8,6 +8,6 @@ describe('get Rooms Action', () => {
     const action = new GetRoomsAction()
     const result = await action.execute()
 
-    expect(result[0]).toBeInstanceOf(Room)
+    result.forEach(data => expect(data).toBeInstanceOf(Room))
   })
 })

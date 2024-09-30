@@ -1,6 +1,7 @@
 import type { Price } from '@/core/common/domain/entities/price'
 import { useMoney } from '@/lib/hooks/useMoney'
 import { describe, expect, it } from 'vitest'
+import { PriceFactory } from '../../core/common/PriceFactory'
 
 const originalNavigator = { ...navigator }
 
@@ -10,13 +11,13 @@ describe('useMoney', () => {
   })
 
   it('should format money correctly with default locale', () => {
-    const price: Price = { amount: 1000, currency: 'USD' }
+    const price: Price = PriceFactory.new().create({ amount: 1000, currency: 'USD' })
     const formatted = useMoney(price)
     expect(formatted).toBe('$1,000.00')
   })
 
   it('should format money correctly with specified locale', () => {
-    const price: Price = { amount: 1000, currency: 'EUR' }
+    const price: Price = PriceFactory.new().create({ amount: 1000 })
     const formatted = useMoney(price, 'de-DE')
     expect(formatted).toBe('1.000,00 €')
   })

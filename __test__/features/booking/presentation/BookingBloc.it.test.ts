@@ -1,12 +1,12 @@
-import type { Booking } from '../../../../src/features/booking/domain/entities/Booking'
+import type { Booking } from '@/features/booking/domain/entities/Booking'
+import { BookingData } from '@/features/booking/data/adapters/BookingData'
+import { GetBookingQuery } from '@/features/booking/domain/queries/GetBookingQuery'
+import { GetBookingAction } from '@/features/booking/presentation/bloc/actions/GetBookingAction'
+import { BookingBloc } from '@/features/booking/presentation/bloc/BookingBloc'
 import { beforeEach, describe, vi } from 'vitest'
-import { BookingData } from '../../../../src/features/booking/data/adapters/BookingData'
-import { GetBookingQuery } from '../../../../src/features/booking/domain/queries/GetBookingQuery'
-import { GetBookingAction } from '../../../../src/features/booking/presentation/bloc/actions/GetBookingAction'
-import { BookingBloc } from '../../../../src/features/booking/presentation/bloc/BookingBloc'
 import { BookingMother } from '../BookingMother'
 
-describe('bookingBloc', () => {
+describe('given a BookingBloc', () => {
   let bloc: BookingBloc
   let bookingData: BookingData
   let mockedData: Booking
